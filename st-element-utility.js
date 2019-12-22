@@ -1,4 +1,4 @@
-(function( $, stLib, stIdentityObject ) {
+(function( $, stLib, stIdentityObject, stBasicData ) {
   var defaultOptions = {
     hideClass: 'st-hidden'
   };
@@ -17,7 +17,7 @@
     };
   } 
   
-})( jQuery, window.stLib, window.stIdentityObject );
+})( jQuery, window.stLib, window.stIdentityObject, window.stBasicData );
 
 (function( $, stLib, stIdentityObject, stElemenOptions ) {
   
@@ -64,16 +64,35 @@
   
 })( jQuery, window.stLib, window.stIdentityObject, window.stElementOptions );
 
-(function( $, stLib, stIdentityObject ) {
-  if ( window.stElementTransitOptions !== 'function' ) {
+(function( $, stLib, stIdentityObject, stBasicData ) {
+  var defaultOptions = {
+    baseDuration: 100
+  };
   
+  if ( window.stElementTransitOptions !== 'function' ) {
+    window.stElementTransitOptions = function( data ) {
+      var obj = stBasicData( data );
+      
+      obj.iORegister('stElementTransitOptions');
+      obj._init = function() {
+        return obj;
+      };
+      
+      obj.getBaseDuration = function() {
+        return defaultOptions.baseDuration;
+      };
+      
+      return obj._init();
+    };
   }  
-})( jQuery, window.stLib, window.stIdentityObject );
+})( jQuery, window.stLib, window.stIdentityObject, window.stBasicData );
 
 (function( $, stLib, stIdentityObject, stElement ) {
   if ( window.stElementTransit !== 'function' ) {
     window.stElementTransit = function( data, containerObj ) {
       var obj = stElement( data, containerObj );
+      
+      obj.iORegister('stElementTransit');
       
       obj._init = function() {
         return obj;
