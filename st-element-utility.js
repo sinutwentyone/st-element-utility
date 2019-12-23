@@ -64,6 +64,7 @@
   
 })( jQuery, window.stLib, window.stIdentityObject, window.stElementOptions );
 
+
 (function( $, stLib, stIdentityObject, stBasicData ) {
   var defaultOptions = {
     baseDuration: 100
@@ -75,17 +76,51 @@
       
       obj.iORegister('stElementTransitOptions');
       obj._init = function() {
+        obj._setupBaseDuration();
+        obj._setupEnterDuration();
+        obj._setupLeaveDuration();
         return obj;
       };
       
+      obj._setupBaseDuration = function() {        
+        obj._baseDuration = obj._parseDuration( obj.data.baseDuration, defaultOptions.baseDuration );        
+      };
+      
+      obj._setupEnterDuration = function() {        
+        obj._enterDuration = obj._parseDuration( obj.data.enterDuration, obj.getBaseDuration() );
+      };
+      
+      obj._setupLeaveDuration = function() {
+        obj._leaveDuration = obj._parseDuration( obj.data.leaveDuration, obj.getBaseDuration() );
+      };
+      
+      obj._parseDuration = function( duration, fallbackDuration ) {
+        var parsedDuration = parseFloat( duration );
+        
+        if ( parsedDuration && !isNaN(parsedDuration) ) {
+          return parsedDuration;
+        }
+        
+        return fallbackDuration;
+      };
+      
       obj.getBaseDuration = function() {
-        return defaultOptions.baseDuration;
+        return obj._baseDuration;
+      };
+      
+      obj.getEnterDuration = function() {
+        return obj._enterDuration;
+      };
+      
+      obj.getLeaveDuration = function() {
+        return obj._leaveDuration;
       };
       
       return obj._init();
     };
   }  
 })( jQuery, window.stLib, window.stIdentityObject, window.stBasicData );
+
 
 (function( $, stLib, stIdentityObject, stElement ) {
   if ( window.stElementTransit !== 'function' ) {
