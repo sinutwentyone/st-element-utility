@@ -5,7 +5,7 @@
   
   if ( typeof window.stElementOptions !== 'function' ) { 
     window.stElementOptions = function( data, containerObj ) {
-      var obj = stBasicData( data );
+      var obj = stBasicData( data, containerObj );
       
       obj.iORegister('stElementOptions');
       
@@ -19,7 +19,7 @@
   
 })( jQuery, window.stLib, window.stIdentityObject, window.stBasicData );
 
-(function( $, stLib, stIdentityObject, stElemenOptions ) {
+(function( $, stLib, stIdentityObject, stElementOptions ) {
   
   if ( typeof window.stElement !== 'function' ) {
     window.stElement = function( data, containerObj ) {
@@ -71,8 +71,8 @@
   };
   
   if ( window.stElementTransitOptions !== 'function' ) {
-    window.stElementTransitOptions = function( data ) {
-      var obj = stBasicData( data );
+    window.stElementTransitOptions = function( data, containerObj ) {
+      var obj = stBasicData( data, containerObj );
       
       obj.iORegister('stElementTransitOptions');
       obj._init = function() {
